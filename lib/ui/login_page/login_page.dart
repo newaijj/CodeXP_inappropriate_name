@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = "/";
+  static const String routeName = "login_page";
 
   LoginPage({Key key}) : super(key: key);
 
