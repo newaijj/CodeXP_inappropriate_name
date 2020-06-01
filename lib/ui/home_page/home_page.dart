@@ -1,6 +1,9 @@
+import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
 import 'package:rolling_nav_bar/indexed.dart';
 import 'package:rolling_nav_bar/rolling_nav_bar.dart';
+
+import 'job_list_page.dart';
 
 double scaledHeight(BuildContext context, double baseSize) {
   return baseSize * (MediaQuery.of(context).size.height / 800);
@@ -64,18 +67,28 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     logoColor = Colors.red[600];
-    _pageController = PageController();
-
+    _pageController = PageController(initialPage: 0);
+    _pages.add(JobListPage());
+    _pages.add(Center(child: Container(child: Text("Page 2"))));
+    _pages.add(Center(child: Container(child: Text("Page 3"))));
+    _pages.add(Center(child: Container(child: Text("Page 4"))));
+    _pages.add(Center(child: Container(child: Text("Page 5"))));
     activeIndex = 0;
     super.initState();
   }
 
-  void incrementIndex() {
-    setState(() {
-      activeIndex = activeIndex < (iconData.length - 1) ? activeIndex + 1 : 0;
-      print(activeIndex);
-    });
-  }
+  // void incrementIndex(int index) {
+  //   setState(() {
+  //     activeIndex = activeIndex < (iconData.length - 1) ? activeIndex + 1 : 0;
+  //     print(activeIndex);
+  //   });
+  // }
+
+  // void changeActiveIndex(int index) {
+  //   setState(() {
+  //     activeIndex = index;
+  //   });
+  // }
 
   // ignore: unused_element
   _onAnimate(AnimationUpdate update) {
@@ -85,7 +98,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _onTap(int index) {
-    activeIndex = index;
+    print(index);
+    // changeActiveIndex(index);
     _pageController.animateToPage(index,
         duration: const Duration(milliseconds: 100), curve: Curves.linear);
   }
@@ -103,26 +117,28 @@ class _HomePageState extends State<HomePage> {
       ];
 
   List<Widget> _pages = List();
+  List<Job> _jobListings = List();
 
   @override
   Widget build(BuildContext context) {
-    _pages.add(Center(child: Container(child: Text("Page 1"))));
-    _pages.add(Center(child: Container(child: Text("Page 2"))));
-    _pages.add(Center(child: Container(child: Text("Page 3"))));
-    _pages.add(Center(child: Container(child: Text("Page 4"))));
-    _pages.add(Center(child: Container(child: Text("Page 5"))));
-
     double navBarHeight = scaledHeight(context, 85);
 
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: _pages,
-        onPageChanged: (index) {
-          setState(() {
-            activeIndex = index;
-          });
-        },
+      resizeToAvoidBottomPadding: false,
+      body: SafeArea(
+        child: PageView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: _pages.length,
+          controller: _pageController,
+          itemBuilder: (context, index) {
+            return _pages[index];
+          },
+          onPageChanged: (index) {
+            setState(() {
+              activeIndex = index;
+            });
+          },
+        ),
       ),
       bottomNavigationBar: Container(
         // bottom: 0,
@@ -135,8 +151,8 @@ class _HomePageState extends State<HomePage> {
           ],
           activeIndex: activeIndex,
           animationCurve: Curves.linear,
-          animationType: AnimationType.roll,
-          baseAnimationSpeed: 50,
+          animationType: AnimationType.shrinkOutIn,
+          baseAnimationSpeed: 200,
           badges: badgeWidgets,
           iconData: iconData,
           iconColors: <Color>[Colors.grey[800]],
