@@ -1,4 +1,5 @@
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
+import 'package:codexp_inapporpriate_name/ui/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:rolling_nav_bar/indexed.dart';
 import 'package:rolling_nav_bar/rolling_nav_bar.dart';
@@ -68,11 +69,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     logoColor = Colors.red[600];
     _pageController = PageController(initialPage: 0);
-    _pages.add(JobListPage());
-    _pages.add(Center(child: Container(child: Text("Page 2"))));
-    _pages.add(Center(child: Container(child: Text("Page 3"))));
-    _pages.add(Center(child: Container(child: Text("Page 4"))));
-    _pages.add(Center(child: Container(child: Text("Page 5"))));
     activeIndex = 0;
     super.initState();
   }
@@ -117,10 +113,14 @@ class _HomePageState extends State<HomePage> {
       ];
 
   List<Widget> _pages = List();
-  List<Job> _jobListings = List();
 
   @override
   Widget build(BuildContext context) {
+    _pages.add(JobListPage());
+    _pages.add(Center(child: Container(child: Text("Page 2"))));
+    _pages.add(Center(child: Container(child: Text("Page 3"))));
+    _pages.add(Center(child: Container(child: Text("Page 4"))));
+    _pages.add(SettingsPage());
     double navBarHeight = scaledHeight(context, 85);
 
     return Scaffold(

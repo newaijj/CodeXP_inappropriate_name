@@ -18,6 +18,8 @@ dependencies:
   flutter_staggered_animations: ^0.1.2
   auto_size_text: ^2.1.0
   cached_network_image: ^2.2.0+1
+  flutter_platform_widgets: ^0.32.5
+  dynamic_theme: ^1.0.1
 
   cupertino_icons: ^0.1.3
 
