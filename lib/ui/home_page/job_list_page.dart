@@ -1,7 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:codexp_inapporpriate_name/ui/home_page/skill_card.dart';
 import 'package:codexp_inapporpriate_name/ui/job_detail_page/job_detail.dart';
+import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'job_card.dart';
 
 class JobListPage extends StatefulWidget {
   const JobListPage({Key key}) : super(key: key);
@@ -14,9 +20,69 @@ class _JobListPageState extends State<JobListPage> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
+  List<Job> _job = List();
+  List<Job> _jobListDisplay = List();
+
+  void filterSearchResults(String query) {
+    List<Job> dummySearchList = List<Job>();
+    dummySearchList.addAll(_job);
+    if (query.isNotEmpty) {
+      List<Job> dummyListData = List<Job>();
+      dummySearchList.forEach((item) {
+        if (item.jobTitle.toLowerCase().contains(query)) {
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        _job.clear();
+        _job.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        _job.clear();
+        _job.addAll(dummySearchList);
+      });
+    }
+  }
+
+  void initState() {
+    _job.add(Job(
+        jobTitle: "Flutter Engineer",
+        companyName: "Flutter",
+        location: "Central, Singapore",
+        jobType: "Engineer",
+        closingDate: DateTime.parse("2020-10-20")));
+    _job.add(Job(
+        jobTitle: "Website Engineer",
+        companyName: "Flutter",
+        location: "East, Singapore",
+        jobType: "Engineer",
+        closingDate: DateTime.parse("2020-10-20")));
+    _job.add(Job(
+        jobTitle: "Facebook Manager",
+        companyName: "Flutter",
+        location: "Singapore",
+        jobType: "Engineer",
+        closingDate: DateTime.parse("2020-10-20")));
+    _job.add(Job(
+        jobTitle: "Account Manager",
+        companyName: "Flutter",
+        location: "Singapore",
+        jobType: "Engineer",
+        closingDate: DateTime.parse("2020-10-20")));
+    _job.add(Job(
+        jobTitle: "Senior Consultant",
+        companyName: "Flutter",
+        location: "Singapore",
+        jobType: "Engineer",
+        closingDate: DateTime.parse("2020-10-20")));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    @override
     void updateSearchQuery(String newQuery) {
       setState(() {
         searchQuery = newQuery;
@@ -33,7 +99,7 @@ class _JobListPageState extends State<JobListPage> {
           hintStyle: TextStyle(color: Colors.white30),
         ),
         style: TextStyle(color: Colors.white, fontSize: 16.0),
-        onChanged: (query) => updateSearchQuery,
+        onChanged: (query) => filterSearchResults(query),
       );
     }
 
@@ -86,6 +152,11 @@ class _JobListPageState extends State<JobListPage> {
       ];
     }
 
+    void _onTap(Job job) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => JobDetailPage(job: job)));
+    }
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -96,96 +167,13 @@ class _JobListPageState extends State<JobListPage> {
         body: AnimationLimiter(
           child: Container(
             child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return AnimationConfiguration.staggeredList(
-                    duration: const Duration(milliseconds: 500),
-                    position: index,
-                    child: SlideAnimation(
-                      verticalOffset: 120.0,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => JobDetailPage()));
-                        },
-                        child: JobCard(),
-                      ),
-                    ));
+              itemCount: _job.length,
+              itemBuilder: (BuildContext context, int index) {
+                return JobCard(
+                    job: _job[index], callback: () => _onTap(_job[index]));
               },
             ),
           ),
         ));
-  }
-}
-
-class JobCard extends StatelessWidget {
-  const JobCard({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              FlutterLogo(),
-              SizedBox(
-                width: 50,
-              ),
-              AutoSizeText(
-                "Flutter Engineer",
-                style: TextStyle(fontSize: 23),
-                maxLines: 1,
-              )
-            ],
-          ),
-          Container(
-            height: 30,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                SkillCard(text: "Html"),
-                SkillCard(text: "CSS"),
-                SkillCard(text: "JavaScript"),
-                SkillCard(text: "TypeScript"),
-              ],
-            ),
-          ),
-          Divider(),
-          Text(
-            "Singapore",
-            style: TextStyle(fontSize: 18),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class SkillCard extends StatelessWidget {
-  final text;
-  const SkillCard({
-    Key key,
-    this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Container(
-        padding: EdgeInsets.only(left: 8, right: 8),
-        child: Text(this.text),
-      ),
-    );
   }
 }
