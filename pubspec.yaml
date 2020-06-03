@@ -21,7 +21,7 @@ dependencies:
   flutter_platform_widgets: ^0.32.5
   dynamic_theme: ^1.0.1
   flutter_vector_icons: ^0.2.1
-  camera: ^0.5.8+2
+  # camera: ^0.5.8+2
   permission_handler: ^5.0.0+hotfix.8
   video_player: ^0.10.11+1
   fluttertoast: ^4.0.1
