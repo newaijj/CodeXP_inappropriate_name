@@ -86,9 +86,6 @@ class _ApplyPageScrollState extends State<ApplyPageScroll> {
                         FirstPage(),
                         SecondPage(),
                         ThirdPage(),
-                        Container(
-                          child: Text("Hello 4"),
-                        ),
                       ],
                     ),
                   );
@@ -158,12 +155,27 @@ class SecondPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Flexible(
+          flex: 1,
           child: Card(
             child: Center(
               child: Text(
                 "STEP 2: CHALLENGING QUESTION 1",
                 style: TextStyle(fontSize: 24),
               ),
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 13,
+          child: Card(
+            child: Column(
+              children: [
+                Container(
+                  width: 300,
+                  height: 600,
+                  child: VideoRecorderExample(),
+                )
+              ],
             ),
           ),
         )
@@ -181,12 +193,27 @@ class ThirdPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Flexible(
+          flex: 1,
           child: Card(
             child: Center(
               child: Text(
                 "STEP 3: CHALLENGING QUESTION 2",
                 style: TextStyle(fontSize: 24),
               ),
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 13,
+          child: Card(
+            child: Column(
+              children: [
+                Container(
+                  width: 300,
+                  height: 600,
+                  child: VideoRecorderExample(),
+                )
+              ],
             ),
           ),
         )

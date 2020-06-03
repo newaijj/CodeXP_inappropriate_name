@@ -20,7 +20,7 @@ class JobListPage extends StatefulWidget {
   _JobListPageState createState() => _JobListPageState();
 }
 
-class _JobListPageState extends State<JobListPage> {
+class _JobListPageState extends State<JobListPage> with AutomaticKeepAliveClientMixin  {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
@@ -143,27 +143,33 @@ class _JobListPageState extends State<JobListPage> {
           if (state is ListLoaded) {
             print(state.jobList);
             return Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                  leading: _isSearching ? const BackButton() : Container(),
-                  title:
-                      _isSearching ? _buildSearchField() : Text("Job Listings"),
-                  actions: _buildActions(),
-                ),
+                // appBar: AppBar(
+                //   centerTitle: true,
+                //   leading: _isSearching ? const BackButton() : Container(),
+                //   title:
+                //       _isSearching ? _buildSearchField() : Text("Job Listings"),
+                //   actions: _buildActions(),
+                // ),
                 body: AnimationLimiter(
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: state.jobList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return JobCard(
-                            job: state.jobList[index],
-                            callback: () => _onTap(state.jobList[index]));
-                      },
-                    ),
-                  ),
-                ));
+              child: Container(
+                child: ListView.builder(
+                  itemCount: state.jobList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return JobCard(
+                        job: state.jobList[index],
+                        callback: () => _onTap(state.jobList[index]));
+                  },
+                ),
+              ),
+            ));
           }
-          return CircularProgressIndicator();
+
+          if (state is ListLoadingError) return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

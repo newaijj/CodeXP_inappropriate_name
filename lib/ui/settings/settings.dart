@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class SettingsPage extends StatefulWidget {
+  static const String routeName = "settingsPage";
+
   SettingsPage({Key key}) : super(key: key);
 
   @override
@@ -12,12 +14,14 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListTile(
-        title: Text("Dark Theme"),
-        trailing: PlatformSwitch(
-          value: Theme.of(context).brightness == Brightness.dark,
-          onChanged: (_) => changeBrightness(),
+    return SafeArea(
+      child: Scaffold(
+        body: ListTile(
+          title: Text("Dark Theme"),
+          trailing: PlatformSwitch(
+            value: Theme.of(context).brightness == Brightness.dark,
+            onChanged: (_) => changeBrightness(),
+          ),
         ),
       ),
     );

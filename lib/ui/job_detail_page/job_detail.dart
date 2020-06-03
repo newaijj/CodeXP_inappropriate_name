@@ -8,12 +8,18 @@ import 'package:intl/intl.dart';
 
 import 'package:codexp_inapporpriate_name/ui/camera.dart';
 
-class JobDetailPage extends StatelessWidget {
+class JobDetailPage extends StatefulWidget {
   static const String routeName = "/jobdetail";
   final Job job;
 
   const JobDetailPage({Key key, this.job}) : super(key: key);
 
+  @override
+  _JobDetailPageState createState() => _JobDetailPageState();
+}
+
+class _JobDetailPageState extends State<JobDetailPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +30,8 @@ class JobDetailPage extends StatelessWidget {
             child: Container(
               height: 85,
               child: Hero(
-                  tag: this.job.logourl,
-                  child: CachedNetworkImage(imageUrl: this.job.logourl)),
+                  tag: this.widget.job.logourl,
+                  child: CachedNetworkImage(imageUrl: this.widget.job.logourl)),
             ),
           ),
           Center(
@@ -36,18 +42,22 @@ class JobDetailPage extends StatelessWidget {
                 OutlineButton(
                   onPressed: () {},
                   child: Text("Share"),
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
                 ),
                 SizedBox(
-                  width:10,
+                  width: 10,
                 ),
                 OutlineButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ApplyPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ApplyPageScroll()));
                   },
                   child: Text("Apply"),
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
                 )
               ],
             ),
@@ -71,7 +81,7 @@ class JobDetailPage extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(job.jobTitle))),
+                            child: Text(widget.job.jobTitle))),
                   )
                 ]),
                 TableRow(children: [
@@ -87,7 +97,7 @@ class JobDetailPage extends StatelessWidget {
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              job.companyName,
+                              widget.job.companyName,
                             ))),
                   )
                 ]),
@@ -103,7 +113,7 @@ class JobDetailPage extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(job.jobType))),
+                            child: Text(widget.job.jobType))),
                   )
                 ]),
                 TableRow(children: [
@@ -118,41 +128,41 @@ class JobDetailPage extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(job.location))),
+                            child: Text(widget.job.location))),
                   )
                 ]),
-                TableRow(children: [
-                  TableCell(
-                      child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Closing Date")))),
-                  TableCell(
-                    child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(DateFormat('yyyy-MM-dd – kk:mm')
-                                .format(job.closingDate)))),
-                  )
-                ]),
-                TableRow(children: [
-                  TableCell(
-                      child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Closing Date")))),
-                  TableCell(
-                    child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(DateFormat('yyyy-MM-dd – kk:mm')
-                                .format(job.closingDate)))),
-                  )
-                ]),
+                // TableRow(children: [
+                //   TableCell(
+                //       child: Padding(
+                //           padding: EdgeInsets.all(8.0),
+                //           child: Align(
+                //               alignment: Alignment.centerLeft,
+                //               child: Text("Closing Date")))),
+                //   TableCell(
+                //     child: Padding(
+                //         padding: EdgeInsets.all(8.0),
+                //         child: Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text(DateFormat('yyyy-MM-dd – kk:mm')
+                //                 .format(job.closingDate)))),
+                //   )
+                // ]),
+                // TableRow(children: [
+                //   TableCell(
+                //       child: Padding(
+                //           padding: EdgeInsets.all(8.0),
+                //           child: Align(
+                //               alignment: Alignment.centerLeft,
+                //               child: Text("Closing Date")))),
+                //   TableCell(
+                //     child: Padding(
+                //         padding: EdgeInsets.all(8.0),
+                //         child: Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text(DateFormat('yyyy-MM-dd – kk:mm')
+                //                 .format(job.closingDate)))),
+                //   )
+                // ]),
               ],
             ),
           )
@@ -160,4 +170,7 @@ class JobDetailPage extends StatelessWidget {
       ),
     ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

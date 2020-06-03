@@ -30,7 +30,11 @@ class JobListBloc extends Bloc<JobListEvent, JobListState> {
 
   Stream<JobListState> _mapLoadJobsToState() async* {
     yield ListLoading();
-    final List<Job> fetchJobs = await _jobsListRepository.fetchJobs();
-    yield ListLoaded(fetchJobs);
+    try {
+      final List<Job> fetchJobs = await _jobsListRepository.fetchJobs();
+      yield ListLoaded(fetchJobs);
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -58,6 +58,16 @@ class LoginState {
     );
   }
 
+  factory LoginState.signUp() {
+    return LoginState(
+      isEmailValid: true,
+      isPasswordValid: true,
+      isSubmitting: false,
+      isSuccess: true,
+      isFailure: false,
+    );
+  }
+
   LoginState update({
     bool isEmailValid,
     bool isPasswordValid,

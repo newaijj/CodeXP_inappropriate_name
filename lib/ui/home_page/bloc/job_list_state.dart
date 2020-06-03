@@ -21,3 +21,4 @@ class ListLoaded extends JobListState {
   @override
   String toString() => 'ListLoaded { list: $jobList }';
 }
+class ListLoadingError extends JobListState {}

@@ -1,8 +1,17 @@
+import 'package:codexp_inapporpriate_name/repository/authentication_bloc/authentication_bloc.dart';
 import 'package:codexp_inapporpriate_name/style/theme.dart' as Theme;
+import 'package:codexp_inapporpriate_name/ui/home_page/home_page.dart';
+import 'package:codexp_inapporpriate_name/ui/login_page/bloc/login_bloc.dart';
+import 'package:codexp_inapporpriate_name/ui/login_page/repository/UserRepository.dart';
 import 'package:codexp_inapporpriate_name/ui/login_page/tab_indication.dart';
+import 'package:codexp_inapporpriate_name/ui/login_page/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'bloc/login_event.dart';
+import 'bloc/login_state.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = "login_page";
@@ -24,6 +33,8 @@ class _LoginPageState extends State<LoginPage>
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
 
+  final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
+
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
@@ -44,74 +55,99 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      key: _scaffoldKey,
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height >= 775.0
-                ? MediaQuery.of(context).size.height
-                : 775.0,
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                  colors: [
-                    Theme.Colors.loginGradientStart,
-                    Theme.Colors.loginGradientEnd
-                  ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 1.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 75.0),
-                  child: new Image(
-                      width: 250.0,
-                      height: 191.0,
-                      fit: BoxFit.fill,
-                      image: new AssetImage('assets/img/login_logo.png')),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20.0),
-                  child: _buildMenuBar(context),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (i) {
-                      if (i == 0) {
-                        setState(() {
-                          right = Colors.white;
-                          left = Colors.black;
-                        });
-                      } else if (i == 1) {
-                        setState(() {
-                          right = Colors.black;
-                          left = Colors.white;
-                        });
-                      }
-                    },
-                    children: <Widget>[
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignIn(context),
-                      ),
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignUp(context),
-                      ),
+    final _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
+    return BlocListener(
+      bloc: _loginBloc,
+      listener: (BuildContext context, LoginState state) {
+        if (state.isFailure) {
+          print("fail");
+          showInSnackBar("Login Fail");
+        }
+        if (state.isSubmitting) {
+          print("submitting");
+          showInSnackBar("Logging in");
+        }
+        if (state.isSuccess) {
+          _authenticationBloc.add(LoggedIn());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                        value: BlocProvider.of<AuthenticationBloc>(context),
+                        child: HomePage(),
+                      )));
+        }
+      },
+      child: new Scaffold(
+        key: _scaffoldKey,
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overscroll) {
+            overscroll.disallowGlow();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height >= 775.0
+                  ? MediaQuery.of(context).size.height
+                  : 775.0,
+              decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [
+                      Theme.Colors.loginGradientStart,
+                      Theme.Colors.loginGradientEnd
                     ],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 75.0),
+                    child: new Image(
+                        width: 250.0,
+                        height: 191.0,
+                        fit: BoxFit.fill,
+                        image: new AssetImage('assets/img/login_logo.png')),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0),
+                    child: _buildMenuBar(context),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (i) {
+                        if (i == 0) {
+                          setState(() {
+                            right = Colors.white;
+                            left = Colors.black;
+                          });
+                        } else if (i == 1) {
+                          setState(() {
+                            right = Colors.black;
+                            left = Colors.white;
+                          });
+                        }
+                      },
+                      children: <Widget>[
+                        new ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildSignIn(context),
+                        ),
+                        new ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildSignUp(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -333,7 +369,12 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => showInSnackBar("Login button pressed")),
+                    onPressed: () {
+                      _loginBloc.add(LoginWithCredentialsPressed(
+                          email: loginEmailController.text,
+                          password: loginPasswordController.text));
+                      showInSnackBar("Login button pressed");
+                    }),
               ),
             ],
           ),
@@ -459,7 +500,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 360.0,
+                  height: 280.0,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -557,44 +598,103 @@ class _LoginPageState extends State<LoginPage>
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          controller: signupConfirmPasswordController,
-                          obscureText: _obscureTextSignupConfirm,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Confirmation",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignupConfirm,
-                              child: Icon(
-                                _obscureTextSignupConfirm
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //       top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                      //   child: TextField(
+                      //     controller: signupConfirmPasswordController,
+                      //     obscureText: _obscureTextSignupConfirm,
+                      //     style: TextStyle(
+                      //         fontFamily: "WorkSansSemiBold",
+                      //         fontSize: 16.0,
+                      //         color: Colors.black),
+                      //     decoration: InputDecoration(
+                      //       border: InputBorder.none,
+                      //       icon: Icon(
+                      //         FontAwesomeIcons.lock,
+                      //         color: Colors.black,
+                      //       ),
+                      //       hintText: "Confirmation",
+                      //       hintStyle: TextStyle(
+                      //           fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                      //       suffixIcon: GestureDetector(
+                      //         onTap: _toggleSignupConfirm,
+                      //         child: Icon(
+                      //           _obscureTextSignupConfirm
+                      //               ? FontAwesomeIcons.eye
+                      //               : FontAwesomeIcons.eyeSlash,
+                      //           size: 15.0,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 340.0),
+                margin: EdgeInsets.only(top: 300.0),
+                decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Theme.Colors.loginGradientStart,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                    BoxShadow(
+                      color: Theme.Colors.loginGradientEnd,
+                      offset: Offset(1.0, 6.0),
+                      blurRadius: 20.0,
+                    ),
+                  ],
+                  gradient: new LinearGradient(
+                      colors: [
+                        Theme.Colors.loginGradientEnd,
+                        Theme.Colors.loginGradientStart
+                      ],
+                      begin: const FractionalOffset(0.2, 0.2),
+                      end: const FractionalOffset(1.0, 1.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+                child: MaterialButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Theme.Colors.loginGradientEnd,
+                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 42.0),
+                      child: Text(
+                        "VERIFY ACCOUNT",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontFamily: "WorkSansBold"),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                                  value: _loginBloc,
+                                  child: VerifyPage(
+                                    email: signupEmailController.text,
+                                  ),
+                                )),
+                      );
+
+                      // showInSnackBar("SignUp button pressed");
+                      // _loginBloc.add(SignUpWithCredentialsPressed(
+                      //     email: signupEmailController.text,
+                      //     password: signupPasswordController.text));
+                    }),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 370.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -634,7 +734,12 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => showInSnackBar("SignUp button pressed")),
+                    onPressed: () {
+                      showInSnackBar("SignUp button pressed");
+                      _loginBloc.add(SignUpWithCredentialsPressed(
+                          email: signupEmailController.text,
+                          password: signupPasswordController.text));
+                    }),
               ),
             ],
           ),
@@ -644,6 +749,7 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void _onSignInButtonPress() {
+    print(loginEmailController.value);
     _pageController.animateToPage(0,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }

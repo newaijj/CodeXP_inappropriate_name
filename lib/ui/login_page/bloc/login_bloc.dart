@@ -36,6 +36,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
         password: event.password,
       );
+    } else if (event is SignUpWithCredentialsPressed) {
+      print(event.toString());
+      yield* _mapSignUpWithCredentialsPressedToState(
+        email: event.email,
+        password: event.password,
+      );
+    } else if (event is VerifyEmailCodePressed) {
+      print(event.toString());
+      yield* _mapVerificationCodePressedToState(
+        email: event.email,
+        verificationCode: event.verificationCode,
+      );
     }
   }
 
@@ -70,6 +82,36 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await _userRepository.signInWithCredentials(email, password);
       yield LoginState.success();
+    } catch (_) {
+      yield LoginState.failure();
+    }
+  }
+
+  Stream<LoginState> _mapSignUpWithCredentialsPressedToState({
+    String email,
+    String password,
+  }) async* {
+    yield LoginState.loading();
+    try {
+      await _userRepository.signUp(email: email, password: password);
+      yield LoginState.success();
+    } catch (_) {
+      yield LoginState.failure();
+    }
+  }
+
+  Stream<LoginState> _mapVerificationCodePressedToState({
+    String email,
+    String verificationCode,
+  }) async* {
+    yield LoginState.loading();
+    try {
+      if (await _userRepository.verifyAccount(
+          email: email, verificationCode: verificationCode)) {
+        yield LoginState.success();
+      } else {
+        yield LoginState.failure();
+      }
     } catch (_) {
       yield LoginState.failure();
     }

@@ -76,3 +76,33 @@ class LoginWithCredentialsPressed extends LoginEvent {
   @override
   List<Object> get props => [];
 }
+
+class VerifyEmailCodePressed extends LoginEvent {
+  final String email;
+  final String verificationCode;
+
+  VerifyEmailCodePressed({@required this.email, @required this.verificationCode});
+
+  @override
+  String toString() {
+    return 'VerifyEmailCodePressed { email: $email, verificationCode: $verificationCode }';
+  }
+
+  @override
+  List<Object> get props => [];
+}
+
+class SignUpWithCredentialsPressed extends LoginEvent {
+  final String email;
+  final String password;
+
+  SignUpWithCredentialsPressed({@required this.email, @required this.password});
+
+  @override
+  String toString() {
+    return 'SignUpWithCredentialsPressed { email: $email, password: $password }';
+  }
+
+  @override
+  List<Object> get props => [];
+}
