@@ -54,41 +54,6 @@ class _JobListPageState extends State<JobListPage> {
   }
 
   void initState() {
-    _job.add(Job(
-        jobTitle: "Flutter Engineer",
-        companyName: "Apple",
-        location: "Central, Singapore",
-        jobType: "Engineer",
-        icon: FontAwesome5Brands.adobe,
-        closingDate: DateTime.parse("2020-10-20")));
-    _job.add(Job(
-        jobTitle: "Website Engineer",
-        companyName: "Pear",
-        location: "East, Singapore",
-        jobType: "Engineer",
-        icon: FontAwesome5Brands.microsoft,
-        closingDate: DateTime.parse("2020-10-20")));
-    _job.add(Job(
-        jobTitle: "Facebook Manager",
-        companyName: "Pineapple",
-        location: "Singapore",
-        jobType: "Engineer",
-        icon: FontAwesome5Brands.algolia,
-        closingDate: DateTime.parse("2020-10-20")));
-    _job.add(Job(
-        jobTitle: "Account Manager",
-        companyName: "Dragon Fruit",
-        location: "Singapore",
-        jobType: "Engineer",
-        icon: FontAwesome5Brands.apple,
-        closingDate: DateTime.parse("2020-10-20")));
-    _job.add(Job(
-        jobTitle: "Senior Consultant",
-        companyName: "Mango",
-        location: "Singapore",
-        jobType: "Engineer",
-        icon: FontAwesome5Brands.discord,
-        closingDate: DateTime.parse("2020-10-20")));
     super.initState();
   }
 
@@ -192,7 +157,7 @@ class _JobListPageState extends State<JobListPage> {
                       itemBuilder: (BuildContext context, int index) {
                         return JobCard(
                             job: state.jobList[index],
-                            callback: () => _onTap(_job[index]));
+                            callback: () => _onTap(state.jobList[index]));
                       },
                     ),
                   ),

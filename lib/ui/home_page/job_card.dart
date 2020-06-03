@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codexp_inapporpriate_name/ui/home_page/skill_card.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +23,12 @@ class JobCard extends StatelessWidget {
         child: Row(
           children: [
             Hero(
-              tag: this.job.jobTitle,
+              tag: this.job.logourl,
               child: Container(
+                width: 80,
                 padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
                 child: ClipRRect(
-                    child: Icon(
-                  this.job.icon,
-                  size: 80,
-                )),
+                    child: CachedNetworkImage(imageUrl: this.job.logourl,)),
               ),
             ),
             SizedBox(

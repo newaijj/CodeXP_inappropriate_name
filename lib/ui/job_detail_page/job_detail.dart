@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:camera/camera.dart';
 import 'package:codexp_inapporpriate_name/ui/apply/apply_page.dart';
+import 'package:codexp_inapporpriate_name/ui/apply/apply_page_scroll.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
+
+import '../camera.dart';
 
 class JobDetailPage extends StatelessWidget {
   static const String routeName = "/jobdetail";
@@ -18,12 +23,8 @@ class JobDetailPage extends StatelessWidget {
             child: Container(
               height: 85,
               child: Hero(
-                tag: job.jobTitle,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Icon(this.job.icon, size: 80),
-                ),
-              ),
+                  tag: this.job.logourl,
+                  child: CachedNetworkImage(imageUrl: this.job.logourl)),
             ),
           ),
           Row(
@@ -35,8 +36,10 @@ class JobDetailPage extends StatelessWidget {
               ),
               MaterialButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ApplyPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ApplyPageScroll()));
                 },
                 child: Text("Apply"),
               )

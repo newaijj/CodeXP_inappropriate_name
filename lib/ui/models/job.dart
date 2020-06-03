@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 
 class Job {
-  String jobTitle, companyName, jobType, location;
+  String jobTitle, companyName, jobType, location, logourl;
   DateTime closingDate;
   IconData icon;
 
@@ -13,7 +13,8 @@ class Job {
       this.jobType,
       this.location,
       this.closingDate,
-      this.icon});
+      this.icon,
+      this.logourl});
 
   factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
@@ -22,8 +23,7 @@ class Job {
       jobType: json['jobType'],
       location: json['location'],
       closingDate: json['closingDate'],
-      icon: json['icon'],
-      
+      logourl: json['logourl'],
     );
   }
 }
