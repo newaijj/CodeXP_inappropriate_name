@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:codexp_inapporpriate_name/ui/home_page/skill_card.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class JobCard extends StatelessWidget {
@@ -22,15 +23,13 @@ class JobCard extends StatelessWidget {
           children: [
             Hero(
               tag: this.job.jobTitle,
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: FlutterLogo(size: 80.0),
-                  ),
-                ),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                child: ClipRRect(
+                    child: Icon(
+                  this.job.icon,
+                  size: 80,
+                )),
               ),
             ),
             SizedBox(
@@ -41,6 +40,11 @@ class JobCard extends StatelessWidget {
                 AutoSizeText(
                   this.job.jobTitle,
                   style: TextStyle(fontSize: 23),
+                  maxLines: 1,
+                ),
+                AutoSizeText(
+                  this.job.companyName,
+                  style: TextStyle(fontSize: 16),
                   maxLines: 1,
                 ),
                 Container(
@@ -66,7 +70,8 @@ class JobCard extends StatelessWidget {
                       style: TextStyle(fontSize: 18),
                     )
                   ],
-                )
+                ),
+                SizedBox(height: 8),
               ],
             )
           ],

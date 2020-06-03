@@ -1,9 +1,12 @@
+import 'package:codexp_inapporpriate_name/repository/job_list_repository.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:codexp_inapporpriate_name/ui/settings/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rolling_nav_bar/indexed.dart';
 import 'package:rolling_nav_bar/rolling_nav_bar.dart';
 
+import 'bloc/job_list_bloc.dart';
 import 'job_list_page.dart';
 
 double scaledHeight(BuildContext context, double baseSize) {

@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:codexp_inapporpriate_name/ui/apply/apply_page.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:flutter/material.dart';
 
@@ -15,23 +15,29 @@ class JobDetailPage extends StatelessWidget {
       child: Column(
         children: [
           Center(
-            child: Hero(
-              tag: job.jobTitle,
-              child: Material(
-                color: Colors.transparent,
-                child: FlutterLogo(size: 80.0),
+            child: Container(
+              height: 85,
+              child: Hero(
+                tag: job.jobTitle,
+                child: Material(
+                  color: Colors.transparent,
+                  child: Icon(this.job.icon, size: 80),
+                ),
               ),
             ),
           ),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MaterialButton(
                 onPressed: () {},
                 child: Text("Share"),
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ApplyPage()));
+                },
                 child: Text("Apply"),
               )
             ],
