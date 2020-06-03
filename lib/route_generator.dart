@@ -15,6 +15,8 @@ class AppRouter {
     switch (settings.name) {
       case HomePage.routeName:
         return MaterialPageRoute(builder: (_) => HomePage());
+      case LoginPage.routeName:
+        return MaterialPageRoute(builder: (_) => LoginPage());
       case JobDetailPage.routeName:
         return MaterialPageRoute(builder: (_) => JobDetailPage());
       case ApplyPage.routeName:

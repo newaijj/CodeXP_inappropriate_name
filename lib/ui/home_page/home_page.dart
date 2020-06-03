@@ -1,4 +1,5 @@
 import 'package:codexp_inapporpriate_name/repository/job_list_repository.dart';
+import 'package:codexp_inapporpriate_name/ui/login_page/login_page.dart';
 import 'package:codexp_inapporpriate_name/ui/models/job.dart';
 import 'package:codexp_inapporpriate_name/ui/settings/settings.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _pages.add(JobListPage());
-    _pages.add(Center(child: Container(child: Text("Page 2"))));
+    _pages.add(Center(
+        child: MaterialButton(
+      child: Text("Login"),
+      onPressed: () {
+        Navigator.pushNamed(context, LoginPage.routeName);
+      },
+    )));
     _pages.add(Center(child: Container(child: Text("Page 3"))));
     _pages.add(Center(child: Container(child: Text("Page 4"))));
     _pages.add(SettingsPage());

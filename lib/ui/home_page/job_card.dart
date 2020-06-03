@@ -39,7 +39,7 @@ class JobCard extends StatelessWidget {
                 AutoSizeText(
                   this.job.jobTitle,
                   style: TextStyle(fontSize: 23),
-                  maxLines: 1,
+                  maxLines: 2,
                 ),
                 AutoSizeText(
                   this.job.companyName,
