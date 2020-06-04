@@ -88,6 +88,8 @@ class LoginState {
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
+    bool isSignUp,
+
   }) {
     return LoginState(
       isEmailValid: isEmailValid ?? this.isEmailValid,

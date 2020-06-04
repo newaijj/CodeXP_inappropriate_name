@@ -439,45 +439,45 @@ class _LoginPageState extends State<LoginPage>
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 10.0, right: 40.0),
-                child: GestureDetector(
-                  onTap: () => showInSnackBar("Facebook button pressed"),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: new Icon(
-                      FontAwesomeIcons.facebookF,
-                      color: Color(0xFF0084ff),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: GestureDetector(
-                  onTap: () => showInSnackBar("Google button pressed"),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: new Icon(
-                      FontAwesomeIcons.google,
-                      color: Color(0xFF0084ff),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              Padding(
+//                padding: EdgeInsets.only(top: 10.0, right: 40.0),
+//                child: GestureDetector(
+//                  onTap: () => showInSnackBar("Facebook button pressed"),
+//                  child: Container(
+//                    padding: const EdgeInsets.all(15.0),
+//                    decoration: new BoxDecoration(
+//                      shape: BoxShape.circle,
+//                      color: Colors.white,
+//                    ),
+//                    child: new Icon(
+//                      FontAwesomeIcons.facebookF,
+//                      color: Color(0xFF0084ff),
+//                    ),
+//                  ),
+//                ),
+//              ),
+//              Padding(
+//                padding: EdgeInsets.only(top: 10.0),
+//                child: GestureDetector(
+//                  onTap: () => showInSnackBar("Google button pressed"),
+//                  child: Container(
+//                    padding: const EdgeInsets.all(15.0),
+//                    decoration: new BoxDecoration(
+//                      shape: BoxShape.circle,
+//                      color: Colors.white,
+//                    ),
+//                    child: new Icon(
+//                      FontAwesomeIcons.google,
+//                      color: Color(0xFF0084ff),
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ],
+//          ),
         ],
       ),
     );
@@ -634,67 +634,9 @@ class _LoginPageState extends State<LoginPage>
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 300.0),
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientStart,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientEnd,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-                  gradient: new LinearGradient(
-                      colors: [
-                        Theme.Colors.loginGradientEnd,
-                        Theme.Colors.loginGradientStart
-                      ],
-                      begin: const FractionalOffset(0.2, 0.2),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "VERIFY ACCOUNT",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BlocProvider.value(
-                                  value: _loginBloc,
-                                  child: VerifyPage(
-                                    email: signupEmailController.text,
-                                  ),
-                                )),
-                      );
 
-                      // showInSnackBar("SignUp button pressed");
-                      // _loginBloc.add(SignUpWithCredentialsPressed(
-                      //     email: signupEmailController.text,
-                      //     password: signupPasswordController.text));
-                    }),
-              ),
               Container(
-                margin: EdgeInsets.only(top: 370.0),
+                margin: EdgeInsets.only(top: 340.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -735,6 +677,16 @@ class _LoginPageState extends State<LoginPage>
                       ),
                     ),
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                                  value: _loginBloc,
+                                  child: VerifyPage(
+                                    email: signupEmailController.text,
+                                  ),
+                                )),
+                      );
                       showInSnackBar("SignUp button pressed");
                       _loginBloc.add(SignUpWithCredentialsPressed(
                           email: signupEmailController.text,

@@ -84,12 +84,12 @@ class CustomDrawer extends StatelessWidget {
             //     onChanged: (_) => changeBrightness(),
             //   ),
             // ),
-            ListTile(
-              title: Text("Settings"),
-              onTap: () {
-                Navigator.pushNamed(context, SettingsPage.routeName);
-              },
-            ),
+//            ListTile(
+//              title: Text("Settings"),
+//              onTap: () {
+//                Navigator.pushNamed(context, SettingsPage.routeName);
+//              },
+//            ),
             ListTile(
               title: Text("Sign Out"),
               onTap: () {

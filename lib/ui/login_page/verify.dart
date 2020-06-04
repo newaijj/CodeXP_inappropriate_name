@@ -6,12 +6,14 @@ import 'package:codexp_inapporpriate_name/ui/login_page/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../login_page/login_page.dart';
 
 import 'bloc/login_event.dart';
 
 class VerifyPage extends StatefulWidget {
-  static const String routeName = "login_page";
+  static const String routeName = "verify_page";
   final String email;
 
   VerifyPage({Key key, this.email}) : super(key: key);
@@ -162,7 +164,6 @@ class _VerifyPageState extends State<VerifyPage>
                         padding: EdgeInsets.only(
                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: TextField(
-
                           focusNode: myFocusNodeEmail,
                           controller: signupEmailController,
                           keyboardType: TextInputType.emailAddress,
@@ -261,6 +262,19 @@ class _VerifyPageState extends State<VerifyPage>
                       ),
                     ),
                     onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage()));
+                      Fluttertoast.showToast(
+                          msg: "Please Login to your account",
+                          toastLength: Toast.LENGTH_LONG,
+//                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+
                       BlocProvider.of<LoginBloc>(context).add(
                           VerifyEmailCodePressed(
                               email: signupEmailController.text,

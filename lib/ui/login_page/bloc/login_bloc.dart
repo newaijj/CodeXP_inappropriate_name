@@ -91,10 +91,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     String email,
     String password,
   }) async* {
-    yield LoginState.loading();
+//    yield LoginState.loading();
     try {
       await _userRepository.signUp(email: email, password: password);
-      yield LoginState.success();
     } catch (_) {
       yield LoginState.failure();
     }
@@ -108,7 +107,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       if (await _userRepository.verifyAccount(
           email: email, verificationCode: verificationCode)) {
-        yield LoginState.success();
+//        yield LoginState.success();
       } else {
         yield LoginState.failure();
       }

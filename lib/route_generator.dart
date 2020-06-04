@@ -1,3 +1,4 @@
+import 'package:codexp_inapporpriate_name/ui/login_page/verify.dart';
 import 'package:codexp_inapporpriate_name/ui/settings/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ApplyPage());
       case SettingsPage.routeName:
         return MaterialPageRoute(builder: (_) => SettingsPage());
+      case VerifyPage.routeName:
+        return MaterialPageRoute(builder: (_) => VerifyPage());
     }
   }
 }

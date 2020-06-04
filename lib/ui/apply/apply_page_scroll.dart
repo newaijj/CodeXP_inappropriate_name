@@ -126,20 +126,20 @@ class _FirstPageState extends State<FirstPage> {
             ),
           ),
         ),
-        // Flexible(
-        //   flex: 13,
-        //   child: Card(
-        //     child: Column(
-        //       children: [
-        //         Container(
-        //           width: 300,
-        //           height: 600,
-        //           child: VideoRecorderExample(),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // )
+         Flexible(
+           flex: 13,
+           child: Card(
+             child: Column(
+               children: [
+                 Container(
+                   width: 300,
+                   height: 600,
+                   child: VideoRecorderExample(),
+                 )
+               ],
+             ),
+           ),
+         )
       ],
     );
   }
@@ -164,20 +164,20 @@ class SecondPage extends StatelessWidget {
             ),
           ),
         ),
-        // Flexible(
-        //   flex: 13,
-        //   child: Card(
-        //     child: Column(
-        //       children: [
-        //         Container(
-        //           width: 300,
-        //           height: 600,
-        //           child: VideoRecorderExample(),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // )
+         Flexible(
+           flex: 13,
+           child: Card(
+             child: Column(
+               children: [
+                 Container(
+                   width: 300,
+                   height: 600,
+                   child: VideoRecorderExample(),
+                 )
+               ],
+             ),
+           ),
+         )
       ],
     );
   }
@@ -202,20 +202,20 @@ class ThirdPage extends StatelessWidget {
             ),
           ),
         ),
-        // Flexible(
-        //   flex: 13,
-        //   child: Card(
-        //     child: Column(
-        //       children: [
-        //         Container(
-        //           width: 300,
-        //           height: 600,
-        //           child: VideoRecorderExample(),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // )
+         Flexible(
+           flex: 13,
+           child: Card(
+             child: Column(
+               children: [
+                 Container(
+                   width: 300,
+                   height: 600,
+                   child: VideoRecorderExample(),
+                 )
+               ],
+             ),
+           ),
+         )
       ],
     );
   }
